@@ -1,6 +1,8 @@
 import spotipy
+# works if you specify which json you want to use
 from spotipy.oauth2 import SpotifyClientCredentials
 import os
+import spotipy.util as util
 import random
 
 os.environ["SPOTIPY_CLIENT_ID"] = '04e9593b8574411ea1640433ea464fb8'
@@ -12,7 +14,6 @@ spotify = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials())
 
 import spotipy.util as util
 
-username = 'bytmjoltm7yu5hq50um4ik6sb'
 client_id = '04e9593b8574411ea1640433ea464fb8'
 client_secret = 'dd80d98d0c9845a6bef36bc4d10c308a'
 redirect_uri = 'http://localhost:8080'
@@ -31,7 +32,8 @@ from os import listdir
 
 def get_streamings(path: str = 'MyData') -> List[dict]:
     files = ['MyData/' + x for x in listdir(path)
-             if x.split('.')[0][:-1] == 'StreamingHistory']
+             if x == 'StreamingHistory2.json']
+             # if x.split('.')[0][:-1] == 'StreamingHistory']
 
     all_streamings = []
 
@@ -40,10 +42,7 @@ def get_streamings(path: str = 'MyData') -> List[dict]:
             new_streamings = ast.literal_eval(f.read())
             all_streamings += [streaming for streaming
                                in new_streamings]
-    return all_streamings  # opens the streamingHistory jsons and turns them into dictionaries. get the first track
-    # name with get_streamings("MyData")[i]["trackName"], from there, you can get the track id using
-    # song_id = get_id('Cabaret', token), and from there, you can get the album name using
-    # track = (spotify.track(song_id))  print(track["album"]["name"])
+    return all_streamings
 
 
 import requests
@@ -73,27 +72,43 @@ i = 0
 all_songs = []
 all_albums = {}
 long_albums = []
-# print(len((get_streamings("MyData"))))
+print(len((get_streamings("MyData"))))
 # len 25908
-for ii in range(25907):
+# for ii in range(len((get_streamings("MyData")))):
+z = 0
+
+"""while True:
+    print(get_streamings("MyData")[z]["trackName"])
+    z += 1"""
+
+x = 0
+for ii in range(len((get_streamings("MyData")))):
     try:
-        song_name = (get_streamings("MyData")[i]["trackName"])
+        song_name = (get_streamings("MyData")[x]["trackName"])
         if song_name not in all_songs:
             all_songs.append(song_name)
+
         song_id = get_id(song_name, token)
         track = (spotify.track(song_id))
         album_name = (track["album"]["name"])
+
         if album_name not in all_albums:
             all_albums[album_name] = 1
+
         elif album_name in all_albums:
             all_albums[album_name] += 1
+        x += 1
+        for key, value in all_albums.items():
+            if key in long_albums:
+                continue
+            elif value >= 5:
+                long_albums.append(key)
+        print(f'{song_name}')
+        print(long_albums)
     except:
         continue
-    i += 1
-# song_id = get_id('Cabaret', token)
-# print(song_id)
-# track = (spotify.track(song_id))
-# print(track["album"]["name"])
+
+
 print(all_songs)
 print(all_albums)
 for key, value in all_albums.items():
