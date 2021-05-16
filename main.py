@@ -14,8 +14,8 @@ spotify = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials())
 
 import spotipy.util as util
 
-client_id = '04e9593b8574411ea1640433ea464fb8'
-client_secret = 'dd80d98d0c9845a6bef36bc4d10c308a'
+client_id = '*'
+client_secret = '*'
 redirect_uri = 'http://localhost:8080'
 scope = 'user-read-recently-played'  # more auth, to get token
 
