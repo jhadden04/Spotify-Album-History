@@ -5,11 +5,11 @@ import os
 import spotipy.util as util
 import random
 
-os.environ["SPOTIPY_CLIENT_ID"] = '04e9593b8574411ea1640433ea464fb8'
-os.environ["SPOTIPY_CLIENT_SECRET"] = 'dd80d98d0c9845a6bef36bc4d10c308a'
+os.environ["SPOTIPY_CLIENT_ID"] = '**'
+os.environ["SPOTIPY_CLIENT_SECRET"] = '**'
 os.environ["SPOTIPY_REDIRECT_URI"] = 'http://localhost:8080'  # all the auth
-username = "bytmjoltm7yu5hq50um4ik6sb"
-device_id = 'b0a12c11905ae21baa4400d765bbca53a6df2e0b'
+username = "**"
+device_id = '**'
 spotify = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials())
 
 import spotipy.util as util
